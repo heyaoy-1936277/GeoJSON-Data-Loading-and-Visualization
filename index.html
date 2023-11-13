@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Load data from an external GeoJSON file</title>
+    <title>Map Application</title>
     <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
     <link href="https://api.mapbox.com/mapbox-gl-js/v2.5.0/mapbox-gl.css" rel="stylesheet">
     <script src="https://api.mapbox.com/mapbox-gl-js/v2.5.0/mapbox-gl.js"></script>
@@ -48,6 +48,20 @@
         tr:nth-child(even) {
             background-color: #f2f2f2;
         }
+    @media screen and (max-width: 1024px) {
+        #container {
+            flex-direction: column-reverse; /* Reverse the order for responsive layout */
+        }
+
+        #table {
+            flex-basis: 100%; /* Make the table take up the full width */
+        }
+
+        #map {
+            flex-grow: 1;
+        }
+    }
+
     </style>
 </head>
 
@@ -55,7 +69,7 @@
     <main id="container">
         <div id="table">
 
-            <h2>Earthquake List</h2>
+            <h2>Population</h2>
             <button onclick="sortTable()">Sort by Magnitude</button>
             
 
@@ -73,10 +87,10 @@
     </main>
     <script>
         mapboxgl.accessToken =
-            'pk.eyJ1IjoiamFrb2J6aGFvIiwiYSI6ImNpcms2YWsyMzAwMmtmbG5icTFxZ3ZkdncifQ.P9MBej1xacybKcDN_jehvw';
+            'pk.eyJ1IjoiYnJ5YW43MiIsImEiOiJjbG93N3l6aWcwcG9oMmtvM2ZseXZwNW15In0.jKoo4FfJ3XIHDarLOGI30g';
         const map = new mapboxgl.Map({
             container: 'map', // container ID
-            style: 'mapbox://styles/mapbox/satellite-v9', // style URL
+            style: 'mapbox://styles/mapbox/light-v11', // style URL
             zoom: 5.5, // starting zoom
             center: [138.043, 38] // starting center
         });
@@ -94,13 +108,13 @@
             let earthquakes = await response.json();
 
 
-            response = await fetch('assets/japan.json');
+            response = await fetch('assets/china.json');
 
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
 
-            let japan = await response.json();
+            let china = await response.json();
 
 
             var table = document.getElementsByTagName("table");
